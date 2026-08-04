@@ -1,0 +1,125 @@
+<section class="sec revband" id="reviews" data-scene="1">
+  <div class="wrap">
+    <div class="revhead rv in">
+      <span class="kicker">{{ section.settings.kicker | escape }}</span>
+      <span class="agg">
+        <span class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 
+        {{ section.settings.rating_text }}
+      </span>
+      {%- if section.settings.secondary_stats != blank -%}
+        <span class="agg">{{ section.settings.secondary_stats }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="revrail rv in" aria-label="Customer reviews">
+    <div class="revtrack">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <article class="glass-2 rcard" {{ block.shopify_attributes }}>
+            <div class="st">
+              {%- assign rating_val = block.settings.rating | times: 1 -%}
+              {%- for i in (1..5) -%}
+                {%- if i <= rating_val -%}
+                  &#9733;
+                {%- else -%}
+                  &#9734;
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <h5>{{ block.settings.heading | escape }}</h5>
+            <p>{{ block.settings.text | escape }}</p>
+            <div class="who">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+              <b>{{ block.settings.author | escape }}</b>
+              {%- if block.settings.product_name != blank -%}
+                <span>&middot; {{ block.settings.product_name | escape }}</span>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Reviews Rail",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "That's what they said"
+    },
+    {
+      "type": "html",
+      "id": "rating_text",
+      "label": "Rating Text (HTML)",
+      "default": "<b>4.8</b> from 8,000+ reviews"
+    },
+    {
+      "type": "html",
+      "id": "secondary_stats",
+      "label": "Secondary Stats Text (HTML)",
+      "default": "Loved by <b>12 lakh+</b> homes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "select",
+          "id": "rating",
+          "label": "Star Rating",
+          "options": [
+            { "value": "5", "label": "5 Stars" },
+            { "value": "4", "label": "4 Stars" },
+            { "value": "3", "label": "3 Stars" },
+            { "value": "2", "label": "2 Stars" },
+            { "value": "1", "label": "1 Star" }
+          ],
+          "default": "5"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Works like a charm"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review Text",
+          "default": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Anita"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product Name (Optional)",
+          "default": "Laundry detergent"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Reviews Rail",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}
