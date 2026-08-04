@@ -1,0 +1,171 @@
+<section class="sec" id="bundles" data-scene="3">
+  <div class="wrap">
+    <div class="glass sec-pad rv in" style="margin-bottom:16px">
+      <div class="panel-head" style="margin-bottom:0">
+        <span class="kicker">{{ section.settings.kicker | escape }}</span>
+        <h2 class="d2" style="margin-top:12px">{{ section.settings.heading | escape }}</h2>
+        <p class="lede" style="margin:0 auto">{{ section.settings.subheading | escape }}</p>
+      </div>
+    </div>
+    
+    <div class="tiers">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bundle' -%}
+          <article class="glass tier {% if block.settings.is_best %}best{% endif %} rv in" style="transition-delay: {{ forloop.index0 | times: 0.1 }}s;" {{ block.shopify_attributes }}>
+            <span class="tag">{{ block.settings.tag | escape }}</span>
+            <div class="tierpix {% if block.settings.image_count == '5' %}five{% endif %}" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                {%- assign img_key = 'product_' | append: i | append: '_image' -%}
+                {%- assign img = block.settings[img_key] -%}
+                {%- if img != blank -%}
+                  <img src="{{ img | image_url: width: 100 }}" alt="" width="50" height="50" class="pimg" style="object-fit:contain;">
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            
+            <div class="qty">{{ block.settings.product_qty | escape }}<small>Products</small></div>
+            <div class="price">{{ block.settings.price | escape }} 
+              {%- if block.settings.compare_at_price != blank -%}
+                <s>{{ block.settings.compare_at_price | escape }}</s>
+              {%- endif -%}
+            </div>
+            <p class="body-s" style="font-size:12px">{{ block.settings.price_per_product | escape }}</p>
+            
+            <ul>
+              {%- for i in (1..3) -%}
+                {%- assign bullet_key = 'bullet_' | append: i -%}
+                {%- assign bullet = block.settings[bullet_key] -%}
+                {%- if bullet != blank -%}
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>{{ bullet | escape }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+            
+            <a class="btn {% if block.settings.is_best %}btn-primary{% else %}btn-ghost{% endif %}" href="{{ block.settings.button_link | default: '#shop' }}">
+              {{ block.settings.button_label | escape | default: 'Build this box' }}
+              {%- if block.settings.is_best -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+              {%- endif -%}
+            </a>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Bundles",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Build your bundle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One box. Every room."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle Tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag",
+          "default": "Starter"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_best",
+          "label": "Highlight as Best Tier?",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "product_qty",
+          "label": "Product Quantity (e.g. 2)",
+          "default": "2"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (e.g. ₹349)",
+          "default": "₹349"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price",
+          "label": "Compare at Price (e.g. ₹598)",
+          "default": "₹598"
+        },
+        {
+          "type": "text",
+          "id": "price_per_product",
+          "label": "Price Per Product Text",
+          "default": "Flat ₹174 per product"
+        },
+        {
+          "type": "text",
+          "id": "bullet_1",
+          "label": "Bullet Point 1",
+          "default": "Pick any two products"
+        },
+        {
+          "type": "text",
+          "id": "bullet_2",
+          "label": "Bullet Point 2",
+          "default": "Free shipping across India"
+        },
+        {
+          "type": "text",
+          "id": "bullet_3",
+          "label": "Bullet Point 3 (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Build this box"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        { "type": "header", "content": "Images" },
+        { "type": "select", "id": "image_count", "label": "Number of Images (for layout)", "options": [{"value": "2", "label": "Few"}, {"value": "5", "label": "Many (adds class 'five')"}], "default": "2" },
+        { "type": "image_picker", "id": "product_1_image", "label": "Image 1" },
+        { "type": "image_picker", "id": "product_2_image", "label": "Image 2" },
+        { "type": "image_picker", "id": "product_3_image", "label": "Image 3" },
+        { "type": "image_picker", "id": "product_4_image", "label": "Image 4" },
+        { "type": "image_picker", "id": "product_5_image", "label": "Image 5" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Bundles",
+      "blocks": [
+        { "type": "bundle" },
+        { "type": "bundle" },
+        { "type": "bundle" }
+      ]
+    }
+  ]
+}
+{% endschema %}
