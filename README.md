@@ -67,7 +67,9 @@ You have two options for adding the custom sections to your theme:
 3. If your Shopify theme is connected to your GitHub repository (via the Shopify GitHub integration), the sections will automatically sync to your live store.
 
 ### 3. Include the Styles
-Ensure that the CSS provided in the original `purelane-homepage.html` prototype is included in your theme. You can append the styles to your theme's `base.css` or create a new stylesheet and link it within `theme.liquid`.
+1. Extracted all CSS from the `<style>` blocks in the original `purelane-homepage.html` prototype.
+2. Created a new stylesheet named `purelane-styles.css` in the `assets/` directory containing this CSS.
+3. Linked the new stylesheet in `layout/theme.liquid` by adding `{{ 'purelane-styles.css' | asset_url | stylesheet_tag }}` directly underneath the inclusion of `base.css`.
 
 ### 4. Customize via the Theme Editor
 1. In the Shopify Admin, go to **Online Store > Themes** and click **Customize**.
@@ -82,3 +84,4 @@ Throughout this assignment, the following Git workflow was used to maintain vers
 2. Pushed the initial theme files and the raw `purelane-homepage.html` prototype.
 3. Iteratively built the 5 dynamic `.liquid` sections.
 4. Added, committed, and pushed each file individually (`git commit -m "Add purelane-hero.liquid section"`) to keep the commit history clean and atomic.
+5. Extracted the prototype's CSS into `assets/purelane-styles.css`, linked it in `layout/theme.liquid`, and committed/pushed these asset changes.
