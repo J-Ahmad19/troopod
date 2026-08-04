@@ -31,29 +31,54 @@ The following 5 core sections were created in the `sections/` directory:
 
 ## How to Reproduce / Install
 
-To use these sections in your own Shopify Dawn theme, follow these steps:
+To reproduce this setup from scratch and use these sections in your own Shopify Dawn theme, follow these exact steps:
 
-### 1. Copy the Sections
-Copy the `.liquid` files from this repository into the `sections/` folder of your Shopify theme.
-- `purelane-hero.liquid`
-- `purelane-shop-grid.liquid`
-- `purelane-best-selling-combos.liquid`
-- `purelane-bundles.liquid`
-- `purelane-reviews-rail.liquid`
+### 1. Set Up the Base Theme
+1. Download the base Dawn theme as a ZIP file from your Shopify admin (or use the exported zip from your development store).
+2. Extract the ZIP file into a local directory on your machine.
+3. Initialize a Git repository in that directory, commit the base files, and push them to a new GitHub repository.
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit of Dawn theme"
+   git remote add origin <your-github-repo-url>
+   git push -u origin main
+   ```
 
-### 2. Include the Styles
+### 2. Add the Custom Sections
+You have two options for adding the custom sections to your theme:
+
+**Option A: Using Shopify's "Edit Code" (Browser-based)**
+1. In your Shopify Admin, go to **Online Store > Themes**.
+2. Click the `...` menu next to your active theme and select **Edit code**.
+3. Under the **Sections** folder, click **Add a new section**.
+4. Name your file (e.g., `purelane-bundles.liquid`) and click **Done**.
+5. Copy the code from the corresponding file in this repository and paste it into your new file, replacing the default code.
+6. Click **Save**. Repeat for all 5 sections.
+
+**Option B: Working Locally (Git-based)**
+1. Copy the 5 `.liquid` files from this repository directly into the `sections/` folder of your local theme directory.
+2. Commit and push the changes to your GitHub repository.
+   ```bash
+   git add sections/purelane-*.liquid
+   git commit -m "Add custom Purelane sections"
+   git push
+   ```
+3. If your Shopify theme is connected to your GitHub repository (via the Shopify GitHub integration), the sections will automatically sync to your live store.
+
+### 3. Include the Styles
 Ensure that the CSS provided in the original `purelane-homepage.html` prototype is included in your theme. You can append the styles to your theme's `base.css` or create a new stylesheet and link it within `theme.liquid`.
 
-### 3. Customize via the Theme Editor
-1. Log in to your Shopify Admin.
-2. Go to **Online Store > Themes** and click **Customize** on your active theme.
-3. Navigate to the page where you want to add the sections (e.g., the Home page).
-4. Click **Add section** and search for the new sections (e.g., "Purelane Hero", "Best Selling Combos").
-5. Use the sidebar to fill in the text fields, select collections, and add blocks (such as Trust Badges or Reviews).
-6. Click **Save**.
+### 4. Customize via the Theme Editor
+1. In the Shopify Admin, go to **Online Store > Themes** and click **Customize**.
+2. Navigate to the page where you want to add the sections (e.g., the Home page).
+3. Click **Add section** and search for the new sections (e.g., "Purelane Hero", "Purelane Bundles").
+4. Once added, use the right sidebar to fill in the text fields, select product collections, and add individual blocks (such as specific bundles or reviews).
+5. Click **Save**.
 
 ## Git Workflow Log
-All work was systematically committed to this repository. The typical workflow involved:
-1. `git init` and `git remote add origin` to set up the connection.
-2. Converting the raw HTML into `.liquid` files containing HTML, Liquid logic, and JSON schemas.
-3. Adding, committing, and pushing files iteratively to ensure version history was maintained.
+Throughout this assignment, the following Git workflow was used to maintain version control:
+1. Initialized the repository locally (`git init`) and linked it to the GitHub remote (`git remote add origin`).
+2. Pushed the initial theme files and the raw `purelane-homepage.html` prototype.
+3. Iteratively built the 5 dynamic `.liquid` sections.
+4. Added, committed, and pushed each file individually (`git commit -m "Add purelane-hero.liquid section"`) to keep the commit history clean and atomic.
