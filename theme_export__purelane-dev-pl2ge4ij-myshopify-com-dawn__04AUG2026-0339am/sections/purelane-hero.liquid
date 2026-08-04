@@ -1,0 +1,122 @@
+<div class="hero-grid" data-scene="1">
+  
+  <!-- Dynamic Trust Badges -->
+  <aside class="badges glass-2" aria-label="Product promises">
+    {% for block in section.blocks %}
+      {% if block.type == 'badge' %}
+        <div class="badge" {{ block.shopify_attributes }}>
+          <span class="bi">
+            {{ block.settings.icon_svg }}
+          </span>
+          <span>{{ block.settings.badge_text | newline_to_br }}</span>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </aside>
+
+  <!-- Dynamic Copy -->
+  <article class="hero-copy">
+    <h1 class="d1 rv in">
+      {{ section.settings.heading_line_1 }}<br>
+      {{ section.settings.heading_line_2 }}<br>
+      <span class="lime">{{ section.settings.heading_line_highlight }}</span>
+    </h1>
+    
+    <div class="rule rv rv-d1" aria-hidden="true">
+      <i></i>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+      <i></i>
+    </div>
+    
+    <p class="lede rv rv-d2">{{ section.settings.subheading | escape }}</p>
+    
+    <div class="hero-cta rv rv-d3">
+      {% if section.settings.primary_btn_link != blank %}
+        <a class="btn btn-primary" href="{{ section.settings.primary_btn_link }}">
+          {{ section.settings.primary_btn_text | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+        </a>
+      {% endif %}
+    </div>
+  </article>
+
+  <!-- Product Stage (Requires Metaobjects/Product inputs in Schema for full dynamism) -->
+  <div class="hero-prod" id="heroProd">
+    <!-- Render dynamic product variables here -->
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Purelane Hero",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "Clean"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2",
+      "default": "That"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_highlight",
+      "label": "Highlighted Text",
+      "default": "Lasts"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it."
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_text",
+      "label": "Primary Button Text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_link",
+      "label": "Primary Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust Badge",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon (SVG code)"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Hero",
+      "blocks": [
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "badge" }
+      ]
+    }
+  ]
+}
+{% endschema %}
